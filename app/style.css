@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'Anton';
+  src: url('./fonts/Anton-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: #14091f; color: #f5eef7; font: 15px/1.45 system-ui, -apple-system, sans-serif; }
+.shell { display: flex; height: 100vh; overflow: hidden; }
+.panel { width: 340px; flex: 0 0 340px; padding: 22px 20px 32px; background: linear-gradient(180deg, #241031, #14091f); border-right: 1px solid #3d1f52; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; }
+.panel h1 { margin: 0; font-family: 'Anton', sans-serif; font-size: 30px; letter-spacing: 1px; text-transform: uppercase; color: #ffb347; text-shadow: 0 3px 0 #c62b6e, 0 6px 14px rgba(0,0,0,.6); }
+.tagline { margin: 0; color: #d8c6e2; font-size: 13.5px; }
+.panel section { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #3d1f52; padding-top: 12px; }
+.panel h2 { margin: 0; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #ff7ab8; }
+.hint { margin: 0; font-size: 12.5px; color: #b9a3c6; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 13px; }
+label.check { flex-direction: row; align-items: center; gap: 8px; font-weight: 500; }
+input[type=text] { font: inherit; padding: 9px 10px; border: 1px solid #5b3a75; border-radius: 8px; background: #1d0c29; color: #fff; }
+input[type=range] { width: 100%; accent-color: #ff7ab8; }
+.file-label input[type=file] { font: inherit; font-weight: 400; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: inherit; font-weight: 600; padding: 9px 12px; border: 1px solid #5b3a75; border-radius: 8px; background: #2a1238; color: #f5eef7; cursor: pointer; }
+button:hover { border-color: #ff7ab8; }
+button.picked { background: #c62b6e; border-color: #ff7ab8; color: #fff; }
+button.export { background: linear-gradient(90deg, #ff7a18, #c62b6e, #7b2ff7); border: 0; font-size: 17px; padding: 13px; color: #fff; }
+#status { margin: 0; min-height: 1.2em; font-size: 13px; color: #9be8c0; }
+.stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 28px; background: radial-gradient(1200px 600px at 50% 0%, #3a1548, #14091f 70%); }
+#cover { max-width: 100%; max-height: calc(100vh - 110px); width: auto; height: auto; box-shadow: 0 18px 60px rgba(0,0,0,.65); border-radius: 4px; background: #2b1838; }
+.stage-hint { margin: 0; font-size: 13px; color: #b9a3c6; text-align: center; }
+
+/* Full-bleed cover mode used by ?shot=cover: only the canvas, edge to edge. */
+body.shot-cover { background: #000; }
+body.shot-cover .shell { display: block; height: auto; min-height: 0; }
+body.shot-cover .panel, body.shot-cover .stage-hint { display: none; }
+body.shot-cover .stage { padding: 0; background: #000; display: block; }
+body.shot-cover #cover { max-width: none; max-height: none; width: 100vw; height: 100vh; box-shadow: none; border-radius: 0; }
