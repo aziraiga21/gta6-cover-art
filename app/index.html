@@ -1,91 +1,99 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sunset Cover Studio — multi-panel cover art maker</title>
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f4ed">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./style.css">
+  <title>Sunset Cover Studio</title>
 </head>
 <body>
-<div class="shell">
-  <aside class="panel" id="controls">
-    <h1>Sunset Cover Studio</h1>
-    <p class="tagline">Your photo, four panels, one striking cover. Pick a layout, drop in photos, write a caption, export a PNG.</p>
-
-    <section>
-      <h2>1 · Layout</h2>
-      <div class="row" id="layoutRow">
-        <button type="button" data-layout="hero2" class="picked">Hero + 2</button>
-        <button type="button" data-layout="hero3">Hero + 3</button>
-        <button type="button" data-layout="grid">2 × 2 Grid</button>
+  <header class="masthead">
+    <div class="identity">
+      <span class="sunmark" aria-hidden="true"></span>
+      <h1>Sunset <span>Cover Studio</span></h1>
+    </div>
+    <button class="download" type="button" data-download>Export PNG <span aria-hidden="true">↓</span></button>
+  </header>
+  <main class="workspace">
+    <section class="stage" aria-label="Cover preview">
+      <div class="stage-bar">
+        <h2>Cover preview</h2>
+        <output data-resolution></output>
       </div>
-    </section>
-
-    <section>
-      <h2>2 · Photos</h2>
-      <p class="hint">Click a panel to select it, drag to pan, scroll to zoom. Drop an image file straight onto a panel, or pick one here.</p>
-      <label class="file-label">Photo for panel <span id="panelNumber">1</span>
-        <input id="photoFile" type="file" accept="image/*">
-      </label>
-      <div class="row">
-        <button type="button" id="samplePier">Try a sample · Pier</button>
-        <button type="button" id="sampleBoulevard">Try a sample · Boulevard</button>
+      <div class="mat">
+        <canvas data-artwork role="img" aria-label="Your multi-panel poster"></canvas>
       </div>
-      <button type="button" id="fillAll">Use this photo in all panels</button>
-      <label>Zoom panel <span id="panelNumber2">1</span>
-        <input id="zoom" type="range" min="1" max="3" step="0.01" value="1">
-      </label>
-      <button type="button" id="resetCrop">Reset crop of selected panel</button>
+      <p class="stage-note">Click a panel to select it. Drag to pan or scroll to zoom.</p>
     </section>
-
-    <section>
-      <h2>3 · Caption</h2>
-      <label>Caption (max 40)
-        <input id="caption" type="text" maxlength="40" value="Sunset Heist">
-      </label>
-      <label>Sub-caption
-        <input id="subcaption" type="text" maxlength="60" value="One last ride down the coast">
-      </label>
-      <div class="row">
-        <button type="button" id="capBottom" class="picked">Caption at bottom</button>
-        <button type="button" id="capTop">Caption at top</button>
-      </div>
-      <label>Caption size
-        <input id="captionSize" type="range" min="0.6" max="1.5" step="0.05" value="1">
-      </label>
-    </section>
-
-    <section>
-      <h2>4 · Colour grade</h2>
-      <div class="row" id="gradeRow">
-        <button type="button" data-grade="sunset" class="picked">Vice Sunset</button>
-        <button type="button" data-grade="neon">Neon Nights</button>
-        <button type="button" data-grade="noir">Palm Noir</button>
-        <button type="button" data-grade="daylight">Daylight</button>
-      </div>
-      <label>Grade strength
-        <input id="intensity" type="range" min="0" max="1" step="0.05" value="0.85">
-      </label>
-      <label class="check"><input id="posterize" type="checkbox"> Comic poster look (posterize / duotone)</label>
-    </section>
-
-    <section>
-      <h2>5 · Export size</h2>
-      <div class="row" id="sizeRow">
-        <button type="button" data-size="1080x1080">1080 × 1080</button>
-        <button type="button" data-size="1080x1350">1080 × 1350</button>
-        <button type="button" data-size="1920x1080" class="picked">1920 × 1080</button>
-      </div>
-      <button type="button" id="export" class="export">Export PNG</button>
-      <p id="status" role="status"></p>
-    </section>
-  </aside>
-
-  <main class="stage">
-    <canvas id="cover" width="1920" height="1080" aria-label="Live cover preview"></canvas>
-    <p class="stage-hint">Live preview — click a panel to select it, drag to reposition the photo, scroll to zoom.</p>
+    <aside class="inspector" aria-label="Cover settings">
+      <fieldset>
+        <legend>Composition</legend>
+        <div class="pair">
+          <label>Layout
+            <select name="arrangement">
+              <option value="hero2">Hero + 2</option>
+              <option value="hero3">Hero + 3</option>
+              <option value="grid">2 × 2 grid</option>
+            </select>
+          </label>
+          <label>Size
+            <select name="format">
+              <option value="1920x1080">1920 × 1080</option>
+              <option value="1080x1350">1080 × 1350</option>
+              <option value="1080x1080">1080 × 1080</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Panel photo</legend>
+        <div class="panel-buttons" data-panels role="group" aria-label="Select a panel"></div>
+        <div class="photo-buttons">
+          <button type="button" data-sample="pier">Pier</button>
+          <button type="button" data-sample="boulevard">Boulevard</button>
+          <label class="upload">Upload photo<input type="file" name="upload" accept="image/*"></label>
+        </div>
+        <div class="crop">
+          <label>Zoom<input name="magnification" type="range" min="1" max="3" step="0.01"></label>
+          <label>Pan X<input name="horizontal" type="range" min="-1" max="1" step="0.01"></label>
+          <label>Pan Y<input name="vertical" type="range" min="-1" max="1" step="0.01"></label>
+        </div>
+        <button class="text-button" type="button" data-repeat>Use this photo in all panels</button>
+      </fieldset>
+      <fieldset>
+        <legend>Lettering</legend>
+        <label>Main caption<input name="headline" type="text" maxlength="80"></label>
+        <label>Subcaption<input name="tagline" type="text" maxlength="120"></label>
+        <div class="pair">
+          <label>Position
+            <select name="placement">
+              <option value="bottom">Bottom</option>
+              <option value="top">Top</option>
+            </select>
+          </label>
+          <label>Caption size<input name="letterScale" type="range" min="0.6" max="1.5" step="0.05"></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Color grade</legend>
+        <div class="pair">
+          <label>Grade
+            <select name="palette">
+              <option value="sunset">Sunset</option>
+              <option value="neon">Neon</option>
+              <option value="noir">Noir</option>
+              <option value="vice">Vice</option>
+            </select>
+          </label>
+          <label>Intensity <output data-strength></output><input name="strength" type="range" min="0" max="1" step="0.01"></label>
+        </div>
+        <label class="toggle"><input name="flatTones" type="checkbox"> Posterize</label>
+      </fieldset>
+      <p class="feedback" role="status" data-feedback></p>
+    </aside>
   </main>
-</div>
-<script type="module" src="./src/main.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
